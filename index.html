@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        function send() {
+            ws.send(document.getElementById('name').value +": "+ document.getElementById('message').value);
+        }
+
+        var host = window.document.location.host.replace(/:.*/, '');
+        var ws = new WebSocket('ws://' + host + ':3000');
+        ws.onmessage = function (event) {
+            document.getElementById("messages").innerHTML += "<div>" + JSON.parse(event.data) + "</div>";
+            console.log(JSON.parse(event.data));
+        };
+    </script>
+</head>
+<body>
+<strong>websocket chat</strong><br />
+<div>
+    <p><input type="text" id="name" value="name"/></p>
+    <textarea id="message"/>message</textarea>
+</div>
+<input type="button" value="send" onclick="send()" />
+<br />
+<hr />
+<div id="messages"/>
+</body>
+</html>
