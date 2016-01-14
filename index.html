@@ -9,8 +9,11 @@
         var host = window.document.location.host.replace(/:.*/, '');
         var ws = new WebSocket('ws://' + host + ':3000');
         ws.onmessage = function (event) {
-            document.getElementById("messages").innerHTML += "<div>" + JSON.parse(event.data) + "</div>";
-            console.log(JSON.parse(event.data));
+            var dataList = JSON.parse(event.data);
+            dataList.forEach(function (data, i){
+                document.getElementById("messages").innerHTML += "<div>" + data + "</div>";
+                console.log(data);
+            });
         };
     </script>
 </head>
