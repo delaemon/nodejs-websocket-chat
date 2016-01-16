@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="styles.css">
     <script>
         function send() {
             ws.send(document.getElementById('name').value +": "+ document.getElementById('message').value);
@@ -11,7 +12,8 @@
         ws.onmessage = function (event) {
             var dataList = JSON.parse(event.data);
             dataList.forEach(function (data, i){
-                document.getElementById("messages").innerHTML += "<div>" + data + "</div>";
+                var bg = "bg" + (i % 2)
+                document.getElementById("messages").innerHTML += "<div class=" + bg + ">" + data + "</div>";
                 console.log(data);
             });
         };
