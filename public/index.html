@@ -1,7 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
     <script>
         function send() {
             ws.send(document.getElementById('name').value +": "+ document.getElementById('message').value);
@@ -18,16 +23,23 @@
             });
         };
     </script>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
 <body>
-<strong>websocket chat</strong><br />
-<div>
+<div class="container">
+    <h1>chat</h1>
     <p><input type="text" id="name" value="name"/></p>
     <textarea id="message"/>message</textarea>
+    <input type="button" value="send" onclick="send()"/>
+    <br />
+    <hr />
+    <div id="messages"/>
 </div>
-<input type="button" value="send" onclick="send()" />
-<br />
-<hr />
-<div id="messages"/>
+<footer class="footer">
+    <div class="container">
+        <p class="text-muted">- chat -</p>
+    </div>
+</footer>
 </body>
 </html>

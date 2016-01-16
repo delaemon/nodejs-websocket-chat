@@ -1,0 +1,21 @@
+{
+  "name": "websocket",
+  "description": "",
+  "main": "server.js",
+  "authors": [
+    "delaemon <takeshi.music.5@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/delaemon/nodejs-websocket-chat",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "3.3.6"
+  }
+}
