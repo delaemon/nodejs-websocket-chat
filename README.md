@@ -8,5 +8,6 @@ bower install
 
 ## run
 ```
+redis-server
 node server.js
 ```
