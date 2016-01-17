@@ -2,8 +2,8 @@
 ## setup for osx
 ```
 brew install nodejs redis
-npm init
-npm install --save ws express redis
+npm install
+bower install
 ```
 
 ## run
