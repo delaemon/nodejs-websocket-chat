@@ -1,7 +1,8 @@
 var WebSocketServer = require("ws").Server
     , http = require("http")
     , express = require("express")
-    , app = express();
+    , app = express()
+    , msgpack = require('msgpack');
 
 app.use(express.static(__dirname + "/public"));
 var server = http.createServer(app);
@@ -16,8 +17,8 @@ var channel = "channel1"
 wss.on("connection", function (ws) {
     sub.subscribe(channel);
     log.lrange("log:" + channel, 0, -1, function(err, history){
-        console.log("(history) count:" + history.length)
-        ws.send(JSON.stringify(history));
+        console.log("(history) count:" + history.length);
+        ws.send(msgpack.pack(history), {binary: true});
     });
     console.log("(connection) count: " + wss.clients.length);
     ws.on("close", function () {
@@ -25,9 +26,9 @@ wss.on("connection", function (ws) {
     });
     ws.on("message", function (message) {
         var now = new Date().toString();
-        var msg = "[" + now + "] " + message
-        console.log("(log)")
-        log.rpush("log:" + channel, msg)
+        var msg = "[" + now + "] " + msgpack.unpack(new Uint8Array(message))
+        console.log("(log)");
+        log.rpush("log:" + channel, msg);
         console.log("(publish) " + msg);
         pub.publish(channel, msg);
     });
@@ -36,7 +37,7 @@ wss.on("connection", function (ws) {
 sub.on("message", function(channel, message) {
     wss.clients.forEach(function (ws, i) {
         console.log("(send) " + message);
-        ws.send(JSON.stringify([message]));
+        ws.send(msgpack.pack([message]), {binary: true})
     });
 });
 

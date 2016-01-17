@@ -7,19 +7,20 @@
 
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/msgpack.js"></script>
     <script>
         function send() {
-            ws.send(document.getElementById('name').value +": "+ document.getElementById('message').value);
+            ws.send(new Uint8Array(msgpack.pack(document.getElementById('name').value +": "+ document.getElementById('message').value)).buffer);
         }
 
         var host = window.document.location.host.replace(/:.*/, '');
         var ws = new WebSocket('ws://' + host + ':3000');
+        ws.binaryType = 'arraybuffer';
         ws.onmessage = function (event) {
-            var dataList = JSON.parse(event.data);
+            var dataList = msgpack.unpack(new Uint8Array(event.data));
             dataList.forEach(function (data, i){
                 var bg = "bg" + (i % 2)
                 document.getElementById("messages").innerHTML += "<div class=" + bg + ">" + data + "</div>";
-                console.log(data);
             });
         };
     </script>
